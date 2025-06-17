@@ -15,10 +15,11 @@ DATA_FILE = "/mnt/data/listings_seen.json"  # Persisted on Render
 bot = Bot(token=TELEGRAM_TOKEN)
 
 def load_seen():
-    if os.path.exists(DATA_FILE):
+    try:
         with open(DATA_FILE, "r") as f:
             return set(json.load(f))
-    return set()
+    except (FileNotFoundError, json.JSONDecodeError):
+        return set()
 
 def save_seen(seen):
     with open(DATA_FILE, "w") as f:
@@ -46,10 +47,7 @@ def fetch_listings():
     return listings
 
 def send_telegram_message(title, url):
-    message = f"🏠 *New Clarion Listing!*
-
-*{title}*
-{url}"
+    message = f"🏠 *New Clarion Listing!*\n\n*{title}*\n{url}"
     try:
         bot.send_message(chat_id=TELEGRAM_CHAT_ID, text=message, parse_mode="Markdown")
     except Exception as e:
