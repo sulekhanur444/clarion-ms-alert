@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: clarion-bot
+    env: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "python main.py"
+    pythonVersion: 3.10.13
+    disk:
+      name: clarion-data
+      mountPath: /mnt/data
+      sizeGB: 1
