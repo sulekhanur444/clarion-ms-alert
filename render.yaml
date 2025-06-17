@@ -11,4 +11,3 @@ services:
         sync: false
       - key: INTERVAL
         value: "30"
-    pythonVersion: 3.10.13
